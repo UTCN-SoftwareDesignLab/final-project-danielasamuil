@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 
 import static com.example.finalprojectdanielasamuil.TestCreationFactory.*;
-import static com.example.finalprojectdanielasamuil.UrlMapping.ENTITY;
-import static com.example.finalprojectdanielasamuil.UrlMapping.USERS;
+import static com.example.finalprojectdanielasamuil.UrlMapping.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,7 +57,7 @@ class UserControllerTest extends BaseControllerTest {
                 .build();
         when(userService.create(user)).thenReturn(user);
 
-        ResultActions result = performPostWithRequestBody(USERS,user);
+        ResultActions result = performPostWithRequestBody(USERS, user);
         result.andExpect(status().isOk())
                 .andExpect(jsonContentToBe(user));
     }
@@ -97,4 +96,6 @@ class UserControllerTest extends BaseControllerTest {
         result.andExpect(status().isOk());
         verify(userService, times(1)).delete(id);
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.example.finalprojectdanielasamuil.controller;
 import com.example.finalprojectdanielasamuil.model.dtos.ClassSubscriptionDto;
 import com.example.finalprojectdanielasamuil.service.ClassSubscriptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import static com.example.finalprojectdanielasamuil.UrlMapping.SUBSCRIPTIONS;
 @RequiredArgsConstructor
 public class ClassSubscriptionController {
 
-    private ClassSubscriptionService classSubscriptionService;
+    private final ClassSubscriptionService classSubscriptionService;
 
     @GetMapping()
     public List<ClassSubscriptionDto> findAll() {

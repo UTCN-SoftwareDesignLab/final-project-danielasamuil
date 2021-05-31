@@ -77,7 +77,7 @@ public class ClassSubscriptionService {
         classSubscription.setFitnessClass(fitnessClass);
         classSubscription.setCustomer(customer);
 
-        if (!customer.getLoyalty())
+        if (!customer.getIsLoyal())
             return makeTransactionSubscription(customer, classSubscription, customer.getAmountOfMoney() - fitnessClass.getPrice());
         else {
             Integer discount = 20 / 100 * fitnessClass.getPrice();

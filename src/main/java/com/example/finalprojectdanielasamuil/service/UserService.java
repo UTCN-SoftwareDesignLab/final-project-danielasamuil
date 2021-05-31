@@ -59,7 +59,7 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
         user.setRoles(roles);
-        user.setLoyalty(false);
+        user.setIsLoyal(false);
         user.setAmountOfMoney(userDto.getAmountOfMoney());
         user.setNrOfSubscriptionsSoFar(0);
 
@@ -70,10 +70,14 @@ public class UserService {
 
         User user = findById(id);
 
+        if(user.getNrOfSubscriptionsSoFar()>=5)
+            user.setIsLoyal(true);
+        else
+            user.setIsLoyal(userDto.getLoyalty());
+
         user.setUsername(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setLoyalty(userDto.getLoyalty());
         user.setAmountOfMoney(userDto.getAmountOfMoney());
         user.setNrOfSubscriptionsSoFar(userDto.getNrOfSubscriptionsSoFar());
 
@@ -86,12 +90,5 @@ public class UserService {
         return userRepository.findAll()
                 .stream().map(userMapper::toDto)
                 .collect(toList());
-    }
-
-    public UserDto updateLoyalty(Integer id, UserDto userDto){
-        if(userDto.getNrOfSubscriptionsSoFar()>=5)
-            userDto.setLoyalty(true);
-
-        return update(id,userDto);
     }
 }

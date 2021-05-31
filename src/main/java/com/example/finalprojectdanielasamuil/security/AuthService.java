@@ -37,9 +37,9 @@ public class AuthService {
                 .username(signUpRequest.getUsername())
                 .password(encoder.encode(signUpRequest.getPassword()))
                 .email(signUpRequest.getEmail())
-                .loyalty(false)
+                .isLoyal(false)
                 .nrOfSubscriptionsSoFar(0)
-                .amountOfMoney(0)
+                .amountOfMoney(signUpRequest.getMoneyAmount())
                 .build();
 
         Set<String> rolesStr = signUpRequest.getRoles();

@@ -1,6 +1,10 @@
 package com.example.finalprojectdanielasamuil;
 
+import com.example.finalprojectdanielasamuil.model.ClassSubscription;
+import com.example.finalprojectdanielasamuil.model.FitnessClass;
 import com.example.finalprojectdanielasamuil.model.User;
+import com.example.finalprojectdanielasamuil.model.dtos.ClassSubscriptionDto;
+import com.example.finalprojectdanielasamuil.model.dtos.FitnessClassDto;
 import com.example.finalprojectdanielasamuil.model.dtos.UserDto;
 
 import java.util.Date;
@@ -29,6 +33,14 @@ public class TestCreationFactory {
             supplier = TestCreationFactory::newUser;
         } else if (cls.equals(UserDto.class)) {
             supplier = TestCreationFactory::newUserDto;
+        } else if (cls.equals(FitnessClass.class)) {
+            supplier = TestCreationFactory::newFitnessClass;
+        } else if (cls.equals(FitnessClassDto.class)) {
+            supplier = TestCreationFactory::newFitnessClassDto;
+        } else if (cls.equals(ClassSubscription.class)) {
+            supplier = TestCreationFactory::newClassSubscription;
+        } else if (cls.equals(ClassSubscriptionDto.class)) {
+            supplier = TestCreationFactory::newClassSubscriptionDto;
         } else {
             supplier = () -> new String("You failed.");
         }
@@ -51,6 +63,8 @@ public class TestCreationFactory {
                 .username(randomString())
                 .email(randomEmail())
                 .password(randomString())
+                .isLoyal(false)
+                .nrOfSubscriptionsSoFar(0)
                 .build();
     }
 
@@ -60,6 +74,41 @@ public class TestCreationFactory {
                 .name(randomString())
                 .email(randomEmail())
                 .password(randomString())
+                .loyalty(false)
+                .build();
+    }
+
+    private static FitnessClass newFitnessClass() {
+        return FitnessClass.builder()
+                .id(randomInt())
+                .name(randomString())
+                .price(randomInt())
+                .trainer(newUser())
+                .build();
+    }
+
+    private static FitnessClassDto newFitnessClassDto() {
+        return FitnessClassDto.builder()
+                .id(randomInt())
+                .name(randomString())
+                .price(randomInt())
+                .trainerId(randomInt())
+                .build();
+    }
+
+    private static ClassSubscription newClassSubscription() {
+        return ClassSubscription.builder()
+                .id(randomInt())
+                .fitnessClass(newFitnessClass())
+                .customer(newUser())
+                .build();
+    }
+
+    private static ClassSubscriptionDto newClassSubscriptionDto() {
+        return ClassSubscriptionDto.builder()
+                .id(randomInt())
+                .fitnessClassId(randomInt())
+                .customerId(randomInt())
                 .build();
     }
 

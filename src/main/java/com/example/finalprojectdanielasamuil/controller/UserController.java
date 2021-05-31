@@ -31,11 +31,6 @@ public class UserController {
         return userService.update(id, userDto);
     }
 
-    @PutMapping(LOYALTY_UPDATES)
-    public UserDto updateLoyalty(@PathVariable Integer id, @RequestBody UserDto userDto) {
-        return userService.updateLoyalty(id, userDto);
-    }
-
     @DeleteMapping()
     public void deleteAll() {
         userService.deleteAll();

@@ -73,7 +73,6 @@ public class AuthController {
 
         authService.register(signUpRequest);
 
-
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 

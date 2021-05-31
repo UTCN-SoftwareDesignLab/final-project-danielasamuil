@@ -42,12 +42,12 @@ public class User {
     @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
-    @Column()
-    private Boolean loyalty;
+    @Column
+    private Boolean isLoyal;
 
-    @Column()
+    @Column
     private Integer amountOfMoney;
 
-    @Column()
+    @Column
     private Integer nrOfSubscriptionsSoFar;
 }

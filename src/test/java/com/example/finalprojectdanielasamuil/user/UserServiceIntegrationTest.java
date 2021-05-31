@@ -2,6 +2,8 @@ package com.example.finalprojectdanielasamuil.user;
 
 import com.example.finalprojectdanielasamuil.model.User;
 import com.example.finalprojectdanielasamuil.model.dtos.UserDto;
+import com.example.finalprojectdanielasamuil.repository.ClassSubscriptionRepository;
+import com.example.finalprojectdanielasamuil.repository.FitnessClassRepository;
 import com.example.finalprojectdanielasamuil.repository.UserRepository;
 import com.example.finalprojectdanielasamuil.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +26,16 @@ class UserServiceIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ClassSubscriptionRepository classSubscriptionRepository;
+
+    @Autowired
+    private FitnessClassRepository fitnessClassRepository;
+
     @BeforeEach
     public void setup() {
+        classSubscriptionRepository.deleteAll();
+        fitnessClassRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -39,7 +49,7 @@ class UserServiceIntegrationTest {
                     .password(UUID.randomUUID().toString())
                     .email("user" + i + "@gmail.com")
                     .amountOfMoney(0)
-                    .loyalty(false)
+                    .isLoyal(false)
                     .nrOfSubscriptionsSoFar(0)
                     .build();
             users.add(user);
@@ -64,7 +74,7 @@ class UserServiceIntegrationTest {
                     .password(UUID.randomUUID().toString())
                     .email("user" + i + "@gmail.com")
                     .amountOfMoney(0)
-                    .loyalty(false)
+                    .isLoyal(false)
                     .nrOfSubscriptionsSoFar(0)
                     .build();
             users.add(user);
@@ -91,7 +101,7 @@ class UserServiceIntegrationTest {
                     .password(UUID.randomUUID().toString())
                     .email("user" + i + "@gmail.com")
                     .amountOfMoney(i)
-                    .loyalty(false)
+                    .isLoyal(false)
                     .nrOfSubscriptionsSoFar(i)
                     .build();
             users.add(user);
@@ -114,4 +124,5 @@ class UserServiceIntegrationTest {
 
         assertEquals(0, all.size());
     }
+
 }

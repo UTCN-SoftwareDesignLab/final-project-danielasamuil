@@ -13,4 +13,5 @@ public class SignupRequest {
     private String email;
     private String password;
     private Set<String> roles;
+    private Integer moneyAmount;
 }
