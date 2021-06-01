@@ -6,16 +6,18 @@ import com.example.finalprojectdanielasamuil.model.ClassSubscription;
 import com.example.finalprojectdanielasamuil.model.FitnessClass;
 import com.example.finalprojectdanielasamuil.model.User;
 import com.example.finalprojectdanielasamuil.model.dtos.ClassSubscriptionDto;
-import com.example.finalprojectdanielasamuil.model.dtos.FitnessClassDto;
 import com.example.finalprojectdanielasamuil.repository.ClassSubscriptionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,8 @@ public class ClassSubscriptionService {
     private final ClassSubscriptionMapper classSubscriptionMapper;
 
     private final UserMapper userMapper;
+
+    private final JavaMailSender javaMailSender;
 
     public ClassSubscription findById(Integer id) {
         return classSubscriptionRepository.findById(id)
@@ -63,6 +67,17 @@ public class ClassSubscriptionService {
         classSubscriptionRepository.deleteAll();
     }
 
+    public void sendEmail() {
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo("test.email.danielasamuil@gmail.com");
+
+        msg.setSubject("New subscription to our gym");
+        msg.setText("Hello \n This is your confirmation email for your new gym class subscription \n Have a nice day");
+
+        javaMailSender.send(msg);
+    }
+
     private Boolean makeTransactionSubscription(User customer, ClassSubscription classSubscription, Integer amount) {
 
         if (amount >= 0) {
@@ -72,6 +87,8 @@ public class ClassSubscriptionService {
             customer.setNrOfSubscriptionsSoFar(subscriptionsSoFar);
             customer.setAmountOfMoney(amount);
             userService.update(customer.getId(), userMapper.toDto(customer));
+
+            sendEmail();
             return true;
         } else return false;
     }
@@ -87,8 +104,9 @@ public class ClassSubscriptionService {
         classSubscription.setFitnessClass(fitnessClass);
         classSubscription.setCustomer(customer);
 
-        if (!customer.getIsLoyal())
+        if (!customer.getIsLoyal()) {
             return makeTransactionSubscription(customer, classSubscription, customer.getAmountOfMoney() - fitnessClass.getPrice());
+        }
         else {
             Integer discount = 20 / 100 * fitnessClass.getPrice();
             Integer newPrice = fitnessClass.getPrice() - discount;

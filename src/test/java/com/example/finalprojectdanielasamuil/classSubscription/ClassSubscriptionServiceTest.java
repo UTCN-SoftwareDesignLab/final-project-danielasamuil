@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.List;
 
@@ -41,10 +42,13 @@ public class ClassSubscriptionServiceTest {
     @Mock
     private UserMapper userMapper;
 
+    @Mock
+    private JavaMailSender javaMailSender;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        classSubscriptionService = new ClassSubscriptionService(classSubscriptionRepository, userService, fitnessClassService, classSubscriptionMapper, userMapper);
+        classSubscriptionService = new ClassSubscriptionService(classSubscriptionRepository, userService, fitnessClassService, classSubscriptionMapper, userMapper, javaMailSender);
     }
 
     @Test

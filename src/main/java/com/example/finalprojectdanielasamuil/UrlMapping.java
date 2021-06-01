@@ -11,6 +11,8 @@ public class UrlMapping {
     public static final String USERS = API_PATH + "/users";
     public static final String ENTITY = "/{id}";
 
+    public static final String EXPORT_REPORT = "/export/{type}";
+
     public static final String FITNESS_CLASSES = API_PATH + "/fitness-classes";
     public static final String SUBSCRIPTIONS = API_PATH + "/subscriptions";
 
