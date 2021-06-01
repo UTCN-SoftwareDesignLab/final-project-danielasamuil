@@ -37,10 +37,10 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (bootstrap) {
+            classSubscriptionRepository.deleteAll();
+            fitnessClassRepository.deleteAll();
             userRepository.deleteAll();
             roleRepository.deleteAll();
-            fitnessClassRepository.deleteAll();
-            classSubscriptionRepository.deleteAll();
             for (ERole value : ERole.values()) {
                 roleRepository.save(
                         Role.builder()

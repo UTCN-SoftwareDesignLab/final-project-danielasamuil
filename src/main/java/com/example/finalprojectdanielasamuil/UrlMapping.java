@@ -13,4 +13,6 @@ public class UrlMapping {
 
     public static final String FITNESS_CLASSES = API_PATH + "/fitness-classes";
     public static final String SUBSCRIPTIONS = API_PATH + "/subscriptions";
+
+    public static final String GEOCODE = API_PATH + "/geocode";
 }
