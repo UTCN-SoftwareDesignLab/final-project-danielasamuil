@@ -1,14 +1,17 @@
 package com.example.finalprojectdanielasamuil.service;
 
 import com.example.finalprojectdanielasamuil.mapper.FitnessClassMapper;
+import com.example.finalprojectdanielasamuil.model.ClassSubscription;
 import com.example.finalprojectdanielasamuil.model.FitnessClass;
 import com.example.finalprojectdanielasamuil.model.User;
+import com.example.finalprojectdanielasamuil.model.dtos.ClassSubscriptionDto;
 import com.example.finalprojectdanielasamuil.model.dtos.FitnessClassDto;
 import com.example.finalprojectdanielasamuil.repository.FitnessClassRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -30,10 +33,21 @@ public class FitnessClassService {
 
     public List<FitnessClassDto> findAll() {
 
-        return fitnessClassRepository.findAll().stream().map(
-                fitnessClassMapper::toDto)
-                .collect(toList());
+        List<FitnessClassDto> fitnessClassDtos = new ArrayList<>();
 
+        List<FitnessClass> fitnessClasses = fitnessClassRepository.findAll();
+
+        for(FitnessClass f: fitnessClasses){
+            FitnessClassDto fitnessClassDto = FitnessClassDto.builder()
+                    .name(f.getName())
+                    .trainerId(f.getTrainer().getId())
+                    .price(f.getPrice())
+                    .id(f.getId())
+                    .build();
+            fitnessClassDtos.add(fitnessClassDto);
+        }
+
+        return fitnessClassDtos;
     }
 
     public void delete(int id) {

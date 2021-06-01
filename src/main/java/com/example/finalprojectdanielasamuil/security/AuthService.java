@@ -46,8 +46,8 @@ public class AuthService {
         Set<Role> roles = new HashSet<>();
 
         if (rolesStr == null) {
-            Role defaultRole = roleRepository.findByName(ERole.TRAINER)
-                    .orElseThrow(() -> new RuntimeException("Cannot find TRAINER role"));
+            Role defaultRole = roleRepository.findByName(ERole.USER)
+                    .orElseThrow(() -> new RuntimeException("Cannot find USER role"));
             roles.add(defaultRole);
         } else {
             rolesStr.forEach(r -> {

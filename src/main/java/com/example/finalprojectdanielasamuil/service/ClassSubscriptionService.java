@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -36,11 +37,20 @@ public class ClassSubscriptionService {
     }
 
     public List<ClassSubscriptionDto> findAll() {
+        List<ClassSubscriptionDto> classSubscriptionDtoList = new ArrayList<>();
 
-        return classSubscriptionRepository.findAll().stream().map(
-                classSubscriptionMapper::toDto)
-                .collect(toList());
+        List<ClassSubscription> classSubscriptions = classSubscriptionRepository.findAll();
 
+        for(ClassSubscription c: classSubscriptions){
+            ClassSubscriptionDto classSubscriptionDto = ClassSubscriptionDto.builder()
+                    .id(c.getId())
+                    .fitnessClassId(c.getFitnessClass().getId())
+                    .customerId(c.getCustomer().getId())
+                    .build();
+            classSubscriptionDtoList.add(classSubscriptionDto);
+        }
+
+        return classSubscriptionDtoList;
     }
 
     public void delete(int id) {
